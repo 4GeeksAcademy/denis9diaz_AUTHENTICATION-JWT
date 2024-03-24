@@ -4,30 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export const Navbar = () => {
     const navigate = useNavigate();
 
-    const logout = async () => {
-        try {
-            const token = localStorage.getItem('jwt-token');
-
-            const resp = await fetch(process.env.BACKEND_URL + "/api/protected", {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + token 
-                }
-            });
-
-            if (!resp.ok) {
-                throw Error("There was a problem in the login request")
-            } else if (resp.status === 403) {
-                throw Error("Missing or invalid token");
-            } else {
-                const data = await resp.json();
-                console.log("This is the data you requested", data);
-            }
-        } catch (error) {
-            console.error(error.message);
-        }
-
+    const logout = () => {
         localStorage.removeItem("jwt-token");
         navigate("/");
     };

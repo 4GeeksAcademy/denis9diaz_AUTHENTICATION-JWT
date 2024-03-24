@@ -1,30 +1,31 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link } from "react-router-dom"; 
 
 const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); 
 
-    const sendForm = async (email, password) => {
-        try {
-            const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
+    const handleSubmit = async (email, password) => {
+      const resp = await fetch(process.env.BACKEND_URL + "/token", { 
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({ email, password }) 
+      })
+ 
+      if(!resp.ok) throw Error("There was a problem in the login request")
+ 
+      if(resp.status === 401){
+           throw("Invalid credentials")
+      }
+      else if(resp.status === 400){
+           throw ("Invalid email or password format")
+      }
+      const data = await resp.json()
 
-            if (!resp.ok) {
-                throw new Error("Hubo un problema en la solicitud de registro");
-            }
-
-            navigate("/login"); 
-        } catch (error) {
-            console.error(error);
-        }
-    };
+      localStorage.setItem("jwt-token", data.token);
+ 
+      return data
+ }
 
     return (
         <div className="container form-body">
@@ -52,7 +53,7 @@ const Signup = () => {
             />
           </div>
           <Link to="/login">
-            <button type="button" className="btn btn-primary" onClick={sendForm}>
+            <button type="button" className="btn btn-primary" onSubmit={handleSubmit}>
                 Send
             </button>
           </Link>

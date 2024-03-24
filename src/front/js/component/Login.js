@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const sendLogin = async () => {
+  const sendLogin = async (email, password) => {
     try {
-      const resp = await fetch (process.env.BACKEND_URL + "/api/login", {
+      const resp = await fetch(process.env.BACKEND_URL + "/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       if (!resp.ok) {
-        throw new Error("There was a problem in the login request");
+        throw new Error("Problema al iniciar sesión");
       }
 
       const data = await resp.json();
       localStorage.setItem("jwt-token", data.token);
+      
+      await getMyTasks();
 
       navigate("/privatemenu");
     } catch (error) {
@@ -45,7 +45,7 @@ const Login = () => {
         />
         <p>Password</p>
         <input
-          type="text"
+          type="password"
           className="password"
           placeholder="Enter password"
           aria-label="Enter password"
@@ -59,6 +59,6 @@ const Login = () => {
       </button>
     </div>
   );
-}
+};
 
 export default Login;
