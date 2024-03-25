@@ -12,22 +12,16 @@ export const Navbar = () => {
     return (
         <nav className="navbar navbar-light bg-light">
             <div className="container">
-                <Link to="/">
-                    <span className="navbar-brand mb-0 h1">JWT Proyect</span>
-                </Link>
+                <Link to="/" className="navbar-brand mb-0 h1">JWT Project</Link>
                 <div className="ml-auto">
                     <div style={{ display: "inline-block", marginRight: "10px" }}>
-                        <Link to="/signup">
-                            <button className="btn btn-primary">Signup</button>
-                        </Link>
+                        <Link to="/signup" className="nav-link">Signup</Link>
                     </div>
                     <div style={{ display: "inline-block", marginRight: "10px" }}>
-                        <Link to="/login">
-                            <button className="btn btn-success">Login</button>
-                        </Link>
+                        <Link to="/login" className="nav-link">Login</Link>
                     </div>
                     <div style={{ display: "inline-block" }}>
-                        <button className="btn btn-danger" onClick={logout}>
+                        <button className="btn btn-link text-danger" onClick={logout}>
                             Logout
                         </button>
                     </div>
