@@ -38,8 +38,9 @@ const PrivateMenu = () => {
     };
 
     return (
-        <div className="container">
-            <h1>Private Menu</h1>
+        <div className="private-container text-center">
+            <h1 className="private-title pt-5">Estás dentro!</h1>
+            <p className="texto-private">Pulsa el botón "Logout" para cerrar sesión</p>
         </div>
     );
 };
