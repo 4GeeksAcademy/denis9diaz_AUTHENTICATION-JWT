@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; 
 
 const Signup = () => {
     const [email, setEmail] = useState("");
@@ -7,12 +7,13 @@ const Signup = () => {
     const navigate = useNavigate();
     
     const handleSubmit = async (email, password) => {
-      const resp = await fetch(process.env.BACKEND_URL + "/token", { 
+      console.log(email, password)
+      const resp = await fetch(process.env.BACKEND_URL + "/api/signup", { 
            method: "POST",
            headers: { "Content-Type": "application/json" },
-           body: JSON.stringify({ email, password }) 
+           body: JSON.stringify({ "email": email, "password": password })
       })
- 
+      console.log(resp)
       if(!resp.ok) throw Error("There was a problem in the login request")
  
       if(resp.status === 401){
@@ -55,11 +56,9 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Link to="/login">
-            <button type="button" className="btn btn-primary" onSubmit={handleSubmit}>
+            <button type="button" className="btn btn-primary" onClick={() => {handleSubmit(email, password)}}>
                 Send
             </button>
-          </Link>
         </div>
     );
 }
