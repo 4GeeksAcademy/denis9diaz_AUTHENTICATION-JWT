@@ -11,7 +11,7 @@ const Login = () => {
       const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ "email": email, "password": password }),
       });
 
       if (!resp.ok) {
@@ -20,8 +20,6 @@ const Login = () => {
 
       const data = await resp.json();
       localStorage.setItem("jwt-token", data.token);
-      
-      await getMyTasks();
 
       navigate("/privatemenu");
     } catch (error) {
@@ -54,7 +52,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button type="button" className="btn btn-primary" onClick={sendLogin}>
+      <button type="button" className="btn btn-primary" onClick={() => { sendLogin(email, password) }}>
         Login
       </button>
     </div>
