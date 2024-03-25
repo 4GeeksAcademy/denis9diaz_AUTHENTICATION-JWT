@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom"; 
 
 const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const navigate = useNavigate();
+    
     const handleSubmit = async (email, password) => {
       const resp = await fetch(process.env.BACKEND_URL + "/token", { 
            method: "POST",
@@ -23,7 +24,9 @@ const Signup = () => {
       const data = await resp.json()
 
       localStorage.setItem("jwt-token", data.token);
- 
+
+      navigate("/login");
+
       return data
  }
 
