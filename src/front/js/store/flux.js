@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			userLoged: localStorage.getItem("jwt-token"),
 			demo: [
 				{
 					title: "FIRST",
@@ -46,6 +47,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			login: (token) => {
+				setStore({userLoged: token})
+
+			},
+			logout: () => {
+				setStore({userLoged: null})
 			}
 		}
 	};

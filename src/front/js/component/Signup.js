@@ -17,7 +17,6 @@ const Signup = () => {
         if (!resp.ok) throw Error("There was a problem in the signup request");
 
         const data = await resp.json();
-        localStorage.setItem("jwt-token", data.token);
         navigate("/login");
         return data;
     };
